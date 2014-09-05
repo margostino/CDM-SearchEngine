@@ -1,0 +1,14 @@
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\CDM-SearchEngine.pdb
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\Elasticsearch.Net.dll
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\Nest.dll
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\Newtonsoft.Json.dll
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\Elasticsearch.Net.pdb
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\Elasticsearch.Net.xml
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\Nest.pdb
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\Nest.xml
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\Newtonsoft.Json.xml
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\obj\Debug\CDM-SearchEngine.pdb
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\obj\Debug\CDM-SearchEngine.csprojResolveAssemblyReference.cache
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\CDM-SearchEngine.dll.config
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\CDM-SearchEngine.dll
+C:\martin.dagostino\workspace\vs2012\CDM-SearchEngine\CDM-SearchEngine\obj\Debug\CDM-SearchEngine.dll
