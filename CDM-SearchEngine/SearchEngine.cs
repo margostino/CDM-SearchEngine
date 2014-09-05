@@ -60,13 +60,13 @@ namespace Citrix
             client = new ElasticClient(settings);
         }
 
-        private void createInstanceOD()
+        public void createInstanceOD()
         {
             // Define the URI of the public Northwind OData service.
             context = new NorthwindEntities(northwindUri);
         }
 
-        private Object defineQueryExpand(String expand)
+        public Object defineQueryExpandOD(String expand)
         {
             // Create a LINQ query to get the orders, including line items,
             //expand="Orders_details" 
@@ -76,14 +76,15 @@ namespace Citrix
             return query;
         }
 
-        public bool executeQuery(Object query, Object entity)
+        public bool executeQueryOD(Customer query)
         {
             var result = false;
             try
             {                
                 // Enumerating returned orders sends the query request to the service.
-                /*foreach (Order e in query)
+                /*foreach (Customer c in query)
                 {
+                    Console.WriteLine(c.ContactName);
                 }*/
             }
             catch (DataServiceQueryException ex)

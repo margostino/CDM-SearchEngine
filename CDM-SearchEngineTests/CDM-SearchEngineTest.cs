@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Citrix;
 using Nest;
+using CDM_SearchEngine.Northwind;
 
 namespace CitrixTest
 {
@@ -9,7 +10,7 @@ namespace CitrixTest
     public class SearchEngineTests
     {
         [TestMethod]
-        public void testExistIndex()
+        public void testRequestIndex()
         {
             
             var myEngine = SearchEngine.getInstance();
@@ -21,12 +22,22 @@ namespace CitrixTest
                 Director = "dddd",
                 Year = "2013"
             };
-
-            Console.WriteLine(myEngine.getRequest(movie).Created);
-
-            Console.WriteLine("Key...");
-            //Console.ReadKey();
-            Assert.IsTrue(true);
+            Assert.IsTrue(myEngine.getRequest(movie).Created);
         }
+
+        [TestMethod]
+        public void testSearchOData()
+        {
+
+            var myEngine = SearchEngine.getInstance();
+            myEngine.createInstanceOD();
+            
+            var query = myEngine.defineQueryExpandOD("Customer");
+            
+            //myEngine.executeQueryOD(query);
+
+            //Assert.IsTrue(myEngine.getRequest(movie).Created);
+        }
+
     }
 }
