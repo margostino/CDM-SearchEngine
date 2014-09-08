@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Services.Client;
+using System.Dynamic;
+using System.Linq.Expressions;
 
 using Nest;
 using CDM_SearchEngine.Northwind;
-using System.Data.Services.Client;
+using Elasticsearch.Net;
+using Newtonsoft.Json;
+using LinqKit;
 
-namespace Citrix
+namespace CDM_SearchEngine
 {
     public class SearchEngine
     {
         private static SearchEngine instance = null;
-	    private ElasticClient client;	    
-	    
+	    //private ElasticClient client;	    
+        private ElasticsearchClient client;	    
+
         private const String ID_NOT_FOUND = "<ID NOT FOUND>";
 	    private const String HTTP_METHOD_PUT = "PUT";
 	    private const String HTTP_METHOD_POST = "POST";
@@ -34,17 +40,22 @@ namespace Citrix
 	    private const bool PRINT_RAW_CONTENT = true;
 	
 	    /*private const String SERVICE_OD_URL = "http://localhost:8080/cars-annotations-sample/MyFormula.svc";*/
-        private const String SERVICE_OD_URL = "http://services.odata.org/Northwind/Northwind.svc/";
+        private const String SERVICE_OD_URL_NORTH = "http://services.odata.org/Northwind/Northwind.svc/";
+        private const String SERVICE_OD_URL_STORE = "http://services.odata.org/V2/(S(r2ir5rzsz3ygo1dahemljxgj))/OData/OData.svc/";
+        private const String INDEX_NORTH = "northwind";
+        private const String INDEX_STORE = "store";
 	    private const String USED_FORMAT = APPLICATION_JSON;
-        private NorthwindEntities context;
+        public NorthwindEntities context;
 
         // Define the URI of the public Northwind OData service.
-        private Uri northwindUri = new Uri(SERVICE_OD_URL, UriKind.Absolute);
+        private Uri northwindUri = new Uri(SERVICE_OD_URL_NORTH, UriKind.Absolute);
+        private Uri storeUri = new Uri(SERVICE_OD_URL_STORE, UriKind.Absolute);
         // Define the URI of the public ElasticSearch service.
         private Uri hostEs = new Uri("http://192.168.0.186:9200", UriKind.Absolute);
         
         public SearchEngine() {	      
-    		startupES();		    		
+    		startupES();
+            createInstanceOD();		
 	    }
 
         public static SearchEngine getInstance() {
@@ -56,8 +67,8 @@ namespace Citrix
 
         private void startupES(){
     	// on startup    	    	    
-            var settings = new ConnectionSettings(hostEs).SetDefaultIndex("amovie");
-            client = new ElasticClient(settings);
+            var settings = new ConnectionSettings(hostEs).SetDefaultIndex("peliculas");
+            client = new ElasticsearchClient();// ElasticClient(settings);
         }
 
         public void createInstanceOD()
@@ -66,98 +77,44 @@ namespace Citrix
             context = new NorthwindEntities(northwindUri);
         }
 
-        public Object defineQueryExpandOD(String expand)
+        public int? getRequestStatus(String index, String type, String id, Object request)
         {
-            // Create a LINQ query to get the orders, including line items,
-            //expand="Orders_details" 
-            var query = from order in context.Orders.Expand(expand)            
-                        select order;
-
-            return query;
+            return client.Get(index, type, id).HttpStatusCode;                
         }
 
-        public bool executeQueryOD(Customer query)
+        public int? postRequestStatus(String index, String type, String id, Object request)
         {
-            var result = false;
-            try
-            {                
-                // Enumerating returned orders sends the query request to the service.
-                /*foreach (Customer c in query)
-                {
-                    Console.WriteLine(c.ContactName);
-                }*/
+            var indexResponse = client.Index(index, type, id, request);
+            return indexResponse.HttpStatusCode;
+        }
+
+        public bool existDocumentOnES(String index, String type, String id, Object request)
+        {                        
+            //string sss = getResponse.Response["_source"];            
+            return client.Get(index, type, id).Success;           
+        }
+
+        public bool existDocumentOnOD(String index, String type, String id, Object request)
+        {
+            //northwind + customers + alfki (index+type+id)
+            
+            /*IQueryable<String> query = from o in context.Customers
+                                       where o.CustomerID == "ALFKI"
+                                       select o;
+
+            var keywords = new List<string>() { "Test1", "Test2" };
+
+            var predicate = PredicateBuilder.False(query);
+            
+            foreach (var key in keywords)
+            {
+                predicate = predicate.Or(a => a.Text.Contains(key));
             }
-            catch (DataServiceQueryException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
 
-            return result;
-        }
+            var query2 = context.Customers.AsQueryable().Where(predicate);*/
 
-        public IIndexResponse getRequest(Object inx)
-        {
-            return client.Index(inx);
-        }
-        
-        public class Movie
-        {
-            public Movie()
-            {
+            return client.Get(index, type, id).Success;
+        }   
 
-            }
-            public string Id { get; set; }
-            public string Title { get; set; }
-            public string Director { get; set; }
-            public string Year { get; set; }
-        }
-
-        public class Article
-        {
-            public string title { get; set; }
-            public string artist { get; set; }
-            public Article(string Title, string Artist)
-            {
-                title = Title; artist = Artist;
-            }
-        }
-
-        public class Contacts
-        {
-            public string name { get; set; }
-            public string country { get; set; }
-            public Contacts(string Name, string Country)
-            {
-                name = Name; country = Country;
-            }
-        }
-
-        public static void UpsertArticle(ElasticClient client, Article article, string index, string type, int id)
-        {
-            /*var RecordInserted = client.Index(article, index, type, id).Id;
-
-            if (RecordInserted.ToString() != "")
-            {
-                Console.WriteLine("Transaction Successful !");
-            }
-            else
-            {
-                Console.WriteLine("Transaction Failed");
-            }*/
-        }
-
-        public static void UpsertContact(ElasticClient client, Contacts contact, string index, string type, int id)
-        {
-            /*var RecordInserted = client.Index(contact, index, type, id).Id;
-
-            if (RecordInserted.ToString() != "")
-            {
-                Console.WriteLine("Transaction Successful !");
-            }
-            else
-            {
-                Console.WriteLine("Transaction Failed");
-            }*/
-        }
     }
 }

@@ -26,3 +26,8 @@ C:\martin.dagostino\workspace\snoop\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin
 C:\martin.dagostino\workspace\snoop\vs2012\CDM-SearchEngine\CDM-SearchEngine\obj\Debug\CDM-SearchEngine.csprojResolveAssemblyReference.cache
 C:\martin.dagostino\workspace\snoop\vs2012\CDM-SearchEngine\CDM-SearchEngine\obj\Debug\CDM-SearchEngine.dll
 C:\martin.dagostino\workspace\snoop\vs2012\CDM-SearchEngine\CDM-SearchEngine\obj\Debug\CDM-SearchEngine.pdb
+C:\martin.dagostino\workspace\snoop\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\EntityFramework.dll
+C:\martin.dagostino\workspace\snoop\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\EntityFramework.SqlServer.dll
+C:\martin.dagostino\workspace\snoop\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\LinqKit.dll
+C:\martin.dagostino\workspace\snoop\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\EntityFramework.xml
+C:\martin.dagostino\workspace\snoop\vs2012\CDM-SearchEngine\CDM-SearchEngine\bin\Debug\EntityFramework.SqlServer.xml
